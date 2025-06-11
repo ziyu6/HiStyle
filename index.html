@@ -157,7 +157,7 @@ strate that when applied to the base TTS model, HiStyle achieves
       }
     </style>
     <figure>
-      <img src="new.png" alt="model" width="1000" height="800">
+      <img src="new.png" alt="model" style="width: 100%; max-width: 1600px;">
       <figcaption>Fig.1 Overview architecture of the HiStyle embedding predictor. The subplot in the upper-left corner illustrates the prediction
 process of our first stage. The Speaker Embedding Predictor takes the text prompt embedding as a condition and uses the
 reference speaker embedding to predict the predicted speaker embedding. Similarly, the subplot in the lower-left corner
@@ -169,73 +169,204 @@ process of the two Embedding Predictors.. </figcaption>
     <br><br>
 
 
+
     <!-- <div class="toc">
       <h3>Table of contents</h3>
       <ul>
-        <li><a href="#Text-Prompt">Text Prompt</a></li>
-        <li><a href="#Audio-Prompt">Audio Prompt</a></li>
-        <li><a href="#Musical-Skills">Musical Skills</a></li>
+        <li><a href="#Text-Prompt">Text-Prompt-Guided Controllable TTS</a></li>
+        <li><a href="#Style-Control">Style Prompt</a></li>
       </ul>
     </div> -->
 
+    
     <h2 id="Text-Prompt" style="text-align: center;">Demos<a name="Text Prompt"></a></h2>
     <table>
-      </colgroup>
       <thead>
         <tr>
-          <th class="tg-0lax"></th>
-          <th class="tg-0lax"></th>
-          <th class="tg-0lax"></th>
-          <!-- <th class="tg-0lax">Pitch Fluctuation</th>
-          <th class="tg-0lax">Text Prompt</th>
-          <th class="tg-0lax">Transcription</th>
-          <th class="tg-0lax">HiStyle</th> -->
+          <th>Target Text</th>
+          <th>Text Prompt</th>
+          <th>Histyle Predictor (proposed)</th>
+          <th>Vatiation Predictor<sup></sup></th>
+          <th>Query Encoder Predictor<sup></sup></th>
         </tr>
       </thead>
-      
-      
-      
+      <tbody>
 
-
-
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <!-- <tbody>
         <tr>
-          <td class="tg-0lax" style="width: 500px; text-align: center; vertical-align: middle;">
-            Slow
-          </td>
-          <td class="tg-0lax" style="width: 500px; text-align: center; vertical-align: middle;">
-            Medium
-          </td>
-          <td class="tg-0lax" style="width: 500px; text-align: center; vertical-align: middle;">
-            Medium
-          </td>
-          <td class="tg-0lax" style="width: 500px; text-align: center; vertical-align: middle;">
-            Medium
-          </td>
-          <td class="tg-0lax" style="width: 500px; text-align: center; vertical-align: middle;">
-            Medium
-          </td>
-          <td class="tg-0lax" style="width: 500px; text-align: center; vertical-align: middle;">
-            山无棱，天地合，才敢与君绝。
-          </td>
-          <td class="tg-0lax" style="width: 500px;">
-            <audio style="width: 100%;" controls src=".final_samples/0_1_1_1_M/4_codec.wav"></audio>
-          </td>
-        </tr> -->
+          <td rowspan="3" style="width: 500px; text-align: center; vertical-align: middle;font-size: 25px;">山无棱，天地合，才敢与君绝。</td>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这名男子以缓慢的语速高声说道 (This man spoke slowly but loudly.)</td>
+          <td><audio controls src="final_samples/0_1_1_1_M/1_codec.wav"></audio></td>
+          <td><audio controls src="audio/Fle/shan_1.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/shan_1.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位男子说话时音调起伏显著，声音却很轻。 (When this man spoke, his pitch fluctuated significantly, yet his voice was very soft.)</td>
+          <td><audio controls src="final_samples/1_1_1_2_M/4_codec.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/shan_2.wav"></audio></td>
+          <td><audio controls src="audio/Fle/shan_codec.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这个女人用平静的语调和非常大的声音说着。 (This woman spoke in a calm tone and with a very loud voice.)</td>
+          <td><audio controls src="final_samples/1_2_1_1_F/4_codec.wav"></audio></td>
+          <td><audio controls src="audio/Fle/shan_codec_3.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/shan_codec_3.wav"></audio></td>
+        </tr>
+        <!---------------------------------------------------------------------------->
 
+        <tr>
+          <td rowspan="3" style="width: 500px; text-align: center; vertical-align: middle;font-size: 25px;">前方有左急转弯，请减速慢行。</td>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位女性说话的音调很高但很平稳。 (Her tone was persistently high and stable throughout her speaking.)</td>
+          <td><audio controls src="final_samples/1_1_2_1_F/1_codec.wav"></audio></td>
+          <td><audio controls src="audio/Fle/qianfang_codec.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/qianfang_codec.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位女性说话音调很低，语速适中。 (She spoke in a low tone with a moderate speed.)</td>
+          <td><audio controls src="final_samples/1_1_0_1_F/1_codec.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/qianfang_codec_2.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/qianfang_codec_2.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">一个男人用低沉的音调和很大的音量说话。 (A man spoke in a deep tone and with a very loud voice.)</td>
+          <td><audio controls src="final_samples/1_1_0_1_M/1_codec.wav"></audio></td>
+          <td><audio controls src="audio/Fle/qianfang_codec_2.wav"></audio></td>
+          <td><audio controls src="audio/Fle/qianfang_codec_3.wav"></audio></td>
+        </tr>
 
+        <!---------------------------------------------------------------------------->
+
+        <tr>
+          <td rowspan="3" style="width: 500px; text-align: center; vertical-align: middle;font-size: 25px;">追到附近北一路一网吧时，该男子跑进网吧躲藏。</td>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位女性说话的音调很高但很平稳。 (Her tone was persistently high and stable throughout her speaking.)</td>
+          <td><audio controls src="audio/Fle/zhuidao_cod.wav"></audio></td>
+          <td><audio controls src="audio/Fle/zhuidao_codec_1.wav"></audio></td>
+          <td><audio controls src="final_samples/1_1_2_1_F/3_codec.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位男性说话的音量极大。 (He spoke in a powerful volume.)</td>
+          <td><audio controls src="audio/PromptTTS2/zhuidao_codec_2.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/zhuidao_codec.wav"></audio></td>
+          <td><audio controls src="audio/Fle/zhuidao_code.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位女性说话音调很低，语速适中。 (She spoke in a low tone with a moderate speed.)</td>
+          <td><audio controls src="audio/Fle/zhuidao_codec.wav"></audio></td>
+          <td><audio controls src="audio/HiStyle/zhuidao_codec_copy.wav"></audio></td>
+          <td><audio controls src="audio/Fle/zhuidao_codec_3.wav"></audio></td>
+        </tr>
         
+        <!---------------------------------------------------------------------------->
+
+        <tr>
+          <td rowspan="3" style="width: 500px; text-align: center; vertical-align: middle;font-size: 25px;">Hi there, how are you doing today?</td>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位男性说话音调低沉、音量极大。 (He spoke in a low tone with a powerful volume.)</td>
+          <td><audio controls src="final_samples/1_1_0_1_M/overall_small_43_codec.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/Hi_1.wav"></audio></td>
+          <td><audio controls src="audio/Fle/Hi_1.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位女性说话的音调很高且语速很快。 (This woman spoke with a high pitch and at a fast pace.)</td>
+          <td><audio controls src="final_samples/1_1_2_1_F/overall_small_43_codec.wav"></audio></td>
+          <td><audio controls src="audio/PromptTTS2/Hi_2.wav"></audio></td>
+          <td><audio controls src="audio/Fle/Hi_2.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这个女性语速很快。(This female speaks very fast.)</td>
+          <td><audio controls src="final_samples/2_1_1_1_F/Hi_codec.wav"></audio></td>
+          <td><audio controls src="audio/Fle/Hi_2.wav"></audio></td>
+          <td><audio controls src="audio/Fle/Hi.wav"></audio></td>
+        </tr>
+
+        <!---------------------------------------------------------------------------->
+
+        <tr>
+          <td rowspan="3" style="width: 500px; text-align: center; vertical-align: middle;font-size: 25px;">Could you please help me with my homework?</td>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">一个男人说话声音很大同时语调变化很大。(A man spoke with a very loud voice and highly varied intonation.)</td>
+          <td><audio controls src="audio/could/M_1.wav"></audio></td>
+          <td><audio controls src="audio/HiStyle/Could_codec1.wav"></audio></td>
+          <td><audio controls src="audio/HiStyle/Could_codec.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这位女性说话时语调很高，语速较快。(The woman spoke with a high pitch and a relatively fast speaking rate.)</td>
+          <td><audio controls src="audio/could/F_pitch.wav"></audio></td>
+          <td><audio controls src="audio/could/F_Pitch.wav"></audio></td>
+          <td><audio controls src="audio/could/F_2.wav"></audio></td>
+        </tr>
+        <tr>
+          <td class="prompt-text" style="width: 500px; text-align: center; vertical-align: middle;font-size: 20px;">这个男生用很平稳的语调说话。(The man spoke in a very smooth tone.)</td>
+          <td><audio controls src="audio/could/M_3.wav"></audio></td>
+          <td><audio controls src="audio/could/M_3_2.wav"></audio></td>
+          <td><audio controls src="audio/could/M_3_1.wav"></audio></td>
+        </tr>
+
+
+
+      </tbody>
+    </table>
+    
+
+    <head>
+  <meta charset="UTF-8">
+  <title>XEmoRAG Attribute Table Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    /* make the two audio‐cells sit side by side */
+    .audio-grid {
+      display: flex;
+      width: 100%;
+      gap: 20px;
+    }
+    .audio-cell {
+      flex: 0 0 48%;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .audio-cell strong {
+      display: block;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    .audio-cell audio {
+      width: 100%;
+      margin-bottom: 4px;
+    }
+    .audio-cell p {
+      margin: 0 0 12px;
+      text-align: left;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+
+<body>
+    
   </section>
 </body>
+
+
+
+
+
 
 </html>
